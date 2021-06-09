@@ -22,17 +22,43 @@ using namespace std;
     输出格式
     输出一个整数，表示最大价值。
 */
-
+// 思路：对每个分组做一遍01背包
 const int N = 1010;
 
-int n, m;
+int n, m, V;
 vector<vector<int>> dp(N, vector<int>(N, 0));
 vector<int> d(N, 0);
-vector<int> v(N), w(N), s(N);
+vector<int> v(N), w(N);
 
 int main(void) {
     cin >> n >> m;
 
+    for (int i = 0; i < n; i++) {
+        int s;
+        cin >> s;
+        for (int j = 0; j < s; j++) {
+            cin >> v[j] >> w[j];
+        }
+        for (int j = 0; j <= m; j++) {
+            for (int k = 0; k < s; k++) {
+                dp[i + 1][j] = dp[i][j];
+                if (j >= v[k]) {
+                    dp[i + 1][j] = max(dp[i + 1][j], dp[i][j - v[k]] + w[k]);
+                } else {
+                    break;
+                }
+            }
+        }
+
+        for (int j = 0; j < s; j++) {
+            for (int k = m; k >= v[j]; k--) {
+                d[k] = max(d[k], d[k - v[j]] + w[j]);
+            }
+        }
+    }
+
     cout << dp[n][m] << endl;
     cout << d[m] << endl;
+    
+    return 0;
 }
