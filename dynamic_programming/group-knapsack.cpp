@@ -44,8 +44,6 @@ int main(void) {
                 dp[i + 1][j] = dp[i][j];
                 if (j >= v[k]) {
                     dp[i + 1][j] = max(dp[i + 1][j], dp[i][j - v[k]] + w[k]);
-                } else {
-                    break;
                 }
             }
         }
