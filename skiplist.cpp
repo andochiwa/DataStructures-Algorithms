@@ -17,7 +17,7 @@ private:
     // 获得插入概率的函数，用投硬币的方式
     int randomLevel() {
         int level = 1; // 第一层必须插入
-        while (rand() % RAND_MAX < P && level < MAX_LEVEL) { // 投硬币
+        while ((rand() & 1) && level < MAX_LEVEL) { // 投硬币
             level++;
         }
         return level;
@@ -113,18 +113,11 @@ public:
 int main(void) {
 
     auto list = new SkipList();
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 100000; i++) {
         list->add(rand());
     }
-    list->add(0);
-    // list->add(0);
-    // list->add(4);
-    // list->add(3);
-    // list->add(6);
-    // list->add(8);
-    // list->add(2);
     // list->remove(6);
     // list->traverse(-1);
-    // list->traverse(1);
+    list->traverse(1);
     return 0;
 }
