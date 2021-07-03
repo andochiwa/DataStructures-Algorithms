@@ -37,7 +37,7 @@ public:
             while (node->next[i] && node->next[i]->val < num) {
                 node = node->next[i];
             }
-            if (i <= newLevel) {
+            if (i < newLevel) {
                 auto next = node->next[i];
                 node->next[i] = newNode;
                 newNode->next[i] = next;
@@ -88,36 +88,25 @@ public:
         return false;
     }
 
-    void traverse(int num) {
-        auto node = head;
-        if (num == -1) {
-            while (node->next[0]) {
-                cout << node->next[0]->val << " ";
-                node = node->next[0];
+    void traverse() {
+        for (int i = level - 1; i >= 0; i--) {
+            auto node = head;
+            cout << i << " ";
+            while (node->next[i]) {
+                cout << node->next[i]->val << " ";
+                node = node->next[i];
             }
-        } else {
-            for (int i = level - 1; i >= 0; i--) {
-                while (node->next[i] && node->next[i]->val < num) {
-                    node = node->next[i];
-                }
-            }
-            while (node->next[0]) {
-                cout << node->next[0]->val << " ";
-                node = node->next[0];
-            }
+            cout << endl;
         }
-        cout << "\n";
     }
 };
 
 int main(void) {
 
     auto list = new SkipList();
-    for (int i = 0; i < 100000; i++) {
+    for (int i = 0; i < 30; i++) {
         list->add(rand());
     }
-    // list->remove(6);
-    // list->traverse(-1);
-    list->traverse(1);
+    list->traverse();
     return 0;
 }
